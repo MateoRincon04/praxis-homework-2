@@ -12,7 +12,7 @@ sudo yum install nginx -y
 sudo systemctl start nginx
 sudo systemctl enable nginx
 
-# Point to the repository where the index.html file is in and save the config
+# Point to the repository where the index.html file is in and save the config, error located in root, it has to be rooted on /shared/dist
 cat <<-'default_config' > /etc/nginx/nginx.conf
 user  nginx;
 worker_processes  1;
@@ -34,7 +34,7 @@ http {
     listen       80;
     server_name  localhost;
     location / {
-      root   /app;
+      root   /shared/dist; 
       index  index.html;
       try_files $uri $uri/ /index.html;
     }
@@ -43,8 +43,8 @@ http {
       root   /usr/share/nginx/html;
     }
   }
-}
+} 
 default_config
 
-# Restar Nginx
+# Restarting Nginx
 sudo systemctl reload nginx
